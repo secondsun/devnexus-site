@@ -55,6 +55,11 @@ public final class SimpleSignInAdapter implements SignInAdapter {
         u.setUsername(info.getId());
         u.setId((long) info.getId().hashCode());
 
+
+        if (!userDao.exists(u.getId())) {
+            userDao.save(u);
+        }
+
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(u, null, u.getAuthorities()));
 
         return null;

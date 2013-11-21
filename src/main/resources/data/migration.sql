@@ -59,3 +59,7 @@ ALTER TABLE users ADD COLUMN version integer;
 ALTER TABLE cfp_submissions ALTER COLUMN bio TYPE character varying(10000);
 ALTER TABLE cfp_submissions ALTER COLUMN description TYPE character varying(10000);
 ALTER TABLE cfp_submissions ALTER COLUMN slot_preference TYPE character varying(1000);
+
+--2013- 21 - Nov
+ALTER TABLE users ADD COLUMN is_admin TYPE boolean;
+

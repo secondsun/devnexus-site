@@ -70,6 +70,8 @@ public class User extends BaseModelObject implements Serializable, UserDetails {
 	//FIXME @XmlJavaTypeAdapter(JaxbDateAdapter.class)
 	private Date lastLoginDate;
 
+    private boolean isAdmin = false;
+
 	//~~~~Constructor~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	public User() {
@@ -177,9 +179,15 @@ public class User extends BaseModelObject implements Serializable, UserDetails {
 
 	@Override
 	public Collection<GrantedAuthority> getAuthorities() {
-		final GrantedAuthority authority = new SimpleGrantedAuthority("ADMIN");
+		final GrantedAuthority admin = new SimpleGrantedAuthority("ADMIN");
+        final GrantedAuthority user = new SimpleGrantedAuthority("USER");
 		final Collection<GrantedAuthority> authorities = new java.util.ArrayList<GrantedAuthority>();
-		authorities.add(authority);
+
+        authorities.add(user);
+
+		if (isAdmin()) {
+            authorities.add(admin);
+        }
 		return authorities;
 	}
 
@@ -213,4 +221,15 @@ public class User extends BaseModelObject implements Serializable, UserDetails {
 		return true;
 	}
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 }
