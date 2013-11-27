@@ -18,6 +18,7 @@ package com.devnexus.ting.core.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,7 +71,11 @@ public class User extends BaseModelObject implements Serializable, UserDetails {
 	//FIXME @XmlJavaTypeAdapter(JaxbDateAdapter.class)
 	private Date lastLoginDate;
 
-    private boolean isAdmin = false;
+    
+        @Column
+        @XmlAttribute
+        @Size(max=1)
+        private Integer superbob;
 
 	//~~~~Constructor~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -184,8 +189,11 @@ public class User extends BaseModelObject implements Serializable, UserDetails {
 		final Collection<GrantedAuthority> authorities = new java.util.ArrayList<GrantedAuthority>();
 
         authorities.add(user);
+        
+        Logger.getAnonymousLogger().info(String.format("%s Is not Admin", this.toString()));
 
-		if (isAdmin()) {
+	if (getSuperbob() == 1) {
+            Logger.getAnonymousLogger().info(String.format("%s Is Admin", username));
             authorities.add(admin);
         }
 		return authorities;
@@ -221,15 +229,21 @@ public class User extends BaseModelObject implements Serializable, UserDetails {
 		return true;
 	}
 
-    public boolean isAdmin() {
-        return isAdmin;
+    
+    public Integer getSuperbob() {
+        return superbob;
     }
 
-    public boolean getIsAdmin() {
-        return isAdmin;
+    public void setSuperbob(Integer admin) {
+        Logger.getAnonymousLogger().info(String.format("%s Is Admin", username));
+        superbob = admin;
     }
 
-    public void setIsAdmin(boolean admin) {
-        isAdmin = admin;
+    @Override
+    public String toString() {
+        return "User{" + "username=" + username + ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", registrationDate=" + registrationDate + ", lastLoginDate=" + lastLoginDate + ", is_admin=" + superbob + '}';
     }
+    
+    
+    
 }
