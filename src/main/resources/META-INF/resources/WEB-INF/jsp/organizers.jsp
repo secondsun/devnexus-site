@@ -11,7 +11,7 @@
                     <div class="thumbnail">
                         <div id="${organizer.firstName}_${organizer.lastName}" class="speaker-member text-center">
                             <c:if test="${organizer.picture != null}">
-                                <img class="img-responsive" src="${organizerPictures[organizer.id]}" alt="${organizer.firstName} ${organizer.lastName}" title="${organizer.firstName} ${organizer.lastName}"/>
+                                <img class="img-responsive" src="${ctx}/s/organizers/${organizer.id}.jpg" alt="${organizer.firstName} ${organizer.lastName}" title="${organizer.firstName} ${organizer.lastName}"/>
                             </c:if>
                             <h4 class="text-center"><c:out value="${organizer.firstName}"/> <c:out value="${organizer.lastName}"/></h4>
                             <p class="text-center" style="margin-top: 1em;">

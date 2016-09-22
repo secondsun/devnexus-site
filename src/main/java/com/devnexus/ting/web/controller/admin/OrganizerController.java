@@ -38,6 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.devnexus.ting.core.service.BusinessService;
 import com.devnexus.ting.model.FileData;
 import com.devnexus.ting.model.Organizer;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -80,6 +81,7 @@ public class OrganizerController {
 		return "/admin/add-organizer";
 	}
 
+        @Transactional
 	@RequestMapping(value="/s/admin/organizer/{organizerId}", method=RequestMethod.POST)
 	public String editOrganizer(@PathVariable("organizerId") Long organizerId,
 			@RequestParam MultipartFile pictureFile,
@@ -125,7 +127,7 @@ public class OrganizerController {
 			}
 
 			try {
-
+                                pictureData.getFileData();
 				pictureData.setFileData(IOUtils.toByteArray(pictureFile.getInputStream()));
 				pictureData.setFileSize(pictureFile.getSize());
 				pictureData.setFileModified(new Date());
